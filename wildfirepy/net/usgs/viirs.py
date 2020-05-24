@@ -123,7 +123,7 @@ class VIIRSBurntAreaDownloader(Viirs):
         super().__init__(product="VNP03MODLL")
 
 
-class VIIRSBurntAreaDownloader1(Viirs):
+class VIIRSBurntAreaData(Viirs):
     """
     Description
     ----------
