@@ -121,3 +121,13 @@ class VIIRSBurntAreaDownloader(Viirs):
     """
     def __init__(self):
         super().__init__(product="VNP03MODLL")
+
+class VIIRSBurntAreaDownloader1(Viirs):
+    """
+
+    Description
+    ----------
+    VIIRS class for `VNP014001`, ie: Some Area.
+    """
+    def __init__(self):
+        super().__init__(product='VNP014001')
