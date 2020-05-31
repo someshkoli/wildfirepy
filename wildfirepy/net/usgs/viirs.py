@@ -112,6 +112,103 @@ class Viirs(AbstractUSGSDownloader):
         url = self.base_url + date + '/' + filename
         return self.fetch(url=url, filename=filename, **kwargs)
 
+    def get_jpg(self, *, year, month, date, hours, minutes, **kwargs):
+        """
+        Downloads the `jpg` file and stores it on the disk.
+
+        Parameters
+        ----------
+        year: `int`
+            Year of the observation.
+        month: `int`
+            Month of the observation.
+        date: `int`
+            Date of observation.
+        hours: `int`
+            Hour of observation. UTC time.
+        minutes: `int`
+            Minute of observation. UTC time.
+        kwargs: `dict`
+            keyword arguments to be passed to `AbstractUSGSDownloader.fetch`
+
+        Returns
+        -------
+        path: `str`
+            Absolute path to the downloaded `jpg` file.
+        """
+        date, julian_day = self._get_date(year=year, month=month, date=date)
+        time = self._get_nearest_time(hours=hours, minutes=minutes)
+
+        filename = f"BROWSE.{self.product}.A{year}{'%03d' % julian_day}.{time}.001."
+        filename = self.regex_traverser.get_filename(filename) + '.jpg'
+        url = self.base_url + date + '/' + filename
+        return self.fetch(url=url, filename=filename, **kwargs)
+
+    def get_nc(self, *, year, month, date, hours, minutes, **kwargs):
+        """
+        Downloads the `nc` file and stores it on the disk.
+
+        Parameters
+        ----------
+        year: `int`
+            Year of the observation.
+        month: `int`
+            Month of the observation.
+        date: `int`
+            Date of observation.
+        hours: `int`
+            Hour of observation. UTC time.
+        minutes: `int`
+            Minute of observation. UTC time.
+        kwargs: `dict`
+            keyword arguments to be passed to `AbstractUSGSDownloader.fetch`
+
+        Returns
+        -------
+        path: `str`
+            Absolute path to the downloaded `nc` file.
+        """
+        date, julian_day = self._get_date(year=year, month=month, date=date)
+        time = self._get_nearest_time(hours=hours, minutes=minutes)
+
+        filename = f"{self.product}.A{year}{'%03d' % julian_day}.{time}.001."
+        filename = self.regex_traverser.get_filename(filename) + '.nc'
+        url = self.base_url + date + '/' + filename
+        return self.fetch(url=url, filename=filename, **kwargs)
+
+    def get_nc_xml(self, *, year, month, date, hours, minutes, **kwargs):
+        """
+        Downloads the `nc_xml` file and stores it on the disk.
+
+        Parameters
+        ----------
+        year: `int`
+            Year of the observation.
+        month: `int`
+            Month of the observation.
+        date: `int`
+            Date of observation.
+        hours: `int`
+            Hour of observation. UTC time.
+        minutes: `int`
+            Minute of observation. UTC time.
+        kwargs: `dict`
+            keyword arguments to be passed to `AbstractUSGSDownloader.fetch`
+
+        Returns
+        -------
+        path: `str`
+            Absolute path to the downloaded `nc_xml` file.
+        """
+        date, julian_day = self._get_date(year=year, month=month, date=date)
+        time = self._get_nearest_time(hours=hours, minutes=minutes)
+
+        filename = f"{self.product}.A{year}{'%03d' % julian_day}.{time}.001."
+        filename = self.regex_traverser.get_filename(filename) + '.nc.xml'
+        url = self.base_url + date + '/' + filename
+        return self.fetch(url=url, filename=filename, **kwargs)
+
+
 
 class VIIRSBurntAreaDownloader(Viirs):
     """
@@ -130,4 +227,4 @@ class VIIRSBurntAreaData(Viirs):
     VIIRS class for `VNP014001`, ie: Some Area.
     """
     def __init__(self):
-        super().__init__(product='VNP014001')
+        super().__init__(product='VNP14')
